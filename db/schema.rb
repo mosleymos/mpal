@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530200741) do
+ActiveRecord::Schema.define(version: 20160531131853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "contacts", force: :cascade do |t|
     t.string   "nom"
@@ -40,6 +41,13 @@ ActiveRecord::Schema.define(version: 20160530200741) do
     t.datetime "updated_at"
     t.string   "usager"
     t.string   "adresse"
+  end
+
+  create_table "spatial_ref_sys", primary_key: "srid", force: :cascade do |t|
+    t.string  "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string  "srtext",    limit: 2048
+    t.string  "proj4text", limit: 2048
   end
 
 end
