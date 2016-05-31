@@ -1,5 +1,5 @@
 config: &config
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   username: mpal
   password: mpal

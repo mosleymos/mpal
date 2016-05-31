@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531131853) do
+ActiveRecord::Schema.define(version: 20160531203404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20160531131853) do
   add_index "contacts_projets", ["contact_id"], name: "index_contacts_projets_on_contact_id", using: :btree
   add_index "contacts_projets", ["projet_id"], name: "index_contacts_projets_on_projet_id", using: :btree
 
+  create_table "operateurs", force: :cascade do |t|
+    t.string   "nom"
+    t.geometry "zone",       limit: {:srid=>4326, :type=>"geometry"}
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
   create_table "projets", force: :cascade do |t|
     t.string   "numero_fiscal"
     t.string   "reference_avis"
@@ -41,13 +48,6 @@ ActiveRecord::Schema.define(version: 20160531131853) do
     t.datetime "updated_at"
     t.string   "usager"
     t.string   "adresse"
-  end
-
-  create_table "spatial_ref_sys", primary_key: "srid", force: :cascade do |t|
-    t.string  "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string  "srtext",    limit: 2048
-    t.string  "proj4text", limit: 2048
   end
 
 end
