@@ -1,4 +1,4 @@
-test "operateurs by coordinates" do
+describe "operateurs by coordinates" do
 	paris = Operateur.create!(
 		name:"OpParis",
 		zone: "",
@@ -9,5 +9,7 @@ test "operateurs by coordinates" do
 		zone: "",
 	)
 
-	assert_equal "OpBesac", Operateur.find_by_coord(6.015272,47.23467).first.name
+	it "peut rechercher un opérateur par coordonnées GPS" do
+		expect(Operateur.find_by_coord(6.015272,47.23467).first.name).to eq "OpBesac"
+	end
 end
