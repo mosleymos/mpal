@@ -16,6 +16,19 @@ ActiveRecord::Schema.define(version: 20160627081912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "agents", force: :cascade do |t|
+    t.string   "username",                       null: false
+    t.integer  "sign_in_count",      default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "agents", ["username"], name: "index_agents_on_username", unique: true, using: :btree
+
   create_table "contacts", force: :cascade do |t|
     t.string   "nom"
     t.string   "role"
@@ -56,7 +69,7 @@ ActiveRecord::Schema.define(version: 20160627081912) do
   add_index "intervenants", ["roles"], name: "index_intervenants_on_roles", using: :gin
   add_index "intervenants", ["themes"], name: "index_intervenants_on_themes", using: :gin
 
-  create_table "invitations", force: :cascade do |t|
+  create_table "invitations", id: false, force: :cascade do |t|
     t.integer "projet_id"
     t.integer "intervenant_id"
     t.string  "token"

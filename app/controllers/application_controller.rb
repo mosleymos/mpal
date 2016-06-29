@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
 
   def authenticate
-    redirect_to new_session_path, alert: t('sessions.access_forbidden') if session[:numero_fiscal] != projet.numero_fiscal
+    redirect_to new_session_path unless session[:profile]
   end
 end

@@ -62,6 +62,8 @@ gem 'httparty'
 gem 'semantic-ui-sass', github: 'doabit/semantic-ui-sass'
 gem 'gon'
 
+gem 'openid_connect'
+
 gem 'mailjet'
 gem 'rest-client', '~>1.6.9'
 gem 'active_model_serializers'

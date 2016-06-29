@@ -4,7 +4,7 @@ class OccupantsController < ApplicationController
   end
 
   def create
-    @occupant = projet.occupants.build(occupant_params)    
+    @occupant = projet.occupants.build(occupant_params)
     if @occupant.save
       redirect_to projet
     else

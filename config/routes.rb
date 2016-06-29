@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   end
   scope(path_names: { new: 'nouvelle' }) do
     resources :sessions, only: [:new, :create]
+    get '/oidc_callback', to: 'sessions#create'
   end
-end 
+end
