@@ -5,25 +5,28 @@ class SessionsController < ApplicationController
   end
 
   def create
-    service = ApiParticulier.new
-    contribuable = service.retrouve_contribuable(params[:numero_fiscal], params[:reference_avis])
-    if contribuable
-      session[:numero_fiscal] = params[:numero_fiscal]
-      projet = ProjetEntrepot.par_numero_fiscal(params[:numero_fiscal])
-      unless projet 
-        facade = ProjetFacade.new(service, ApiBan.new)
-        projet = facade.initialise_projet(params[:numero_fiscal], params[:reference_avis])
-        projet.save
-        notice = t('projets.messages.creation.corps')
-        flash[:notice_titre] = t('projets.messages.creation.titre', usager: projet.usager)
-      end
-      if projet
-        redirect_to projet, notice: notice
-      else
-        redirect_to new_session_path, alert: t('sessions.erreur_generique')
-      end
-    else 
-      redirect_to new_session_path, alert: t('sessions.invalid_credentials')
+    projet = ProjetEntrepot.par_numero_fiscal(params[:adresse_mail])
+    if projet
+      render "invited"
+      return
+    else
+      projet = Projet.new
+      projet.usager = "#{params[:prenom]} #{params[:nom]}"
+      projet.numero_fiscal = params[:adresse_mail]
+      projet.reference_avis = params[:adresse_mail]
+      adresse = ApiBan.new.precise(params[:adresse_postale])
+      projet.longitude = adresse[:longitude]
+      projet.latitude = adresse[:latitude]
+      projet.departement = adresse[:departement]
+      projet.adresse = adresse[:adresse]
+      result = projet.save
+      puts "projet_created:#{result}"
+      notice = t('projets.messages.creation.corps')
+      flash[:notice_titre] = t('projets.messages.creation.titre', usager: projet.usager)
     end
+    session[:projet] = projet
+    puts "projet:#{projet},#{projet.id},#{projet.usager}"
+    redirect_to "/projets/#{projet.id}", notice: notice
   end
+
 end
