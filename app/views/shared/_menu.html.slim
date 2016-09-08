@@ -4,9 +4,8 @@ div.ui.large.fixed.menu
     = link_to 'Le projet', @projet_courant, class: "active item"
     - if intervenant?
       = link_to 'Demande', projet_demande_path(@projet_courant), class: "item" if intervenant?
-      = link_to 'Tableau de bord', projet_suivi_intervenant_path(@projet_courant), class: "item" if @projet_courant
     - if demandeur?
-      = link_to 'Tableau de bord', projet_suivi_path(@projet_courant), class: "item" if @projet_courant
+      = link_to 'Suivi', projet_suivi_path(@projet_courant), class: "item" if @projet_courant
     = link_to 'Intervenants', projet_intervenants_path(@projet_courant), class: "item" if @projet_courant
 
     div.right.menu

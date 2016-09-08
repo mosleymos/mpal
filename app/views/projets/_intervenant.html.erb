@@ -3,17 +3,13 @@
     <div class="header"><%= intervenant.raison_sociale %></div>
     <div class="meta">
       <% intervenant.roles.each do |role| %>
-        <div class="ui label">ROLE :<%= role %></div>
       <% end if intervenant.roles.present? && @utilisateur_courant.is_a?(Intervenant) %>
     </div>
     <div class="meta"><%= intervenant.adresse_postale %></div>
+    <% unless intervenant.roles.include?("pris") %><div class="description">Pour en savoir plus : <a href="http://lesiteweb.com">http://www.<%= intervenant.raison_sociale.downcase.gsub(/\s+/, "") %>.com</a></div>
+    <% end %>
 
     <div class="description"><%= simple_format(intervenant.informations) %></div>
-  </div>
-  <div class="extra content">
-    <% intervenant.themes.each do |theme| %>
-      <div class="ui label"><%= theme %></div>
-    <% end if intervenant.themes.present? %>
   </div>
   <% if avec_appel_a_agir %>
   <div class="extra content">
